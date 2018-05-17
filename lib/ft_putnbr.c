@@ -1,22 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_putnbr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tgelu <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/05/10 14:03:59 by tgelu             #+#    #+#             */
-/*   Updated: 2018/05/17 17:23:54 by tgelu            ###   ########.fr       */
+/*   Created: 2018/04/17 16:02:31 by tgelu             #+#    #+#             */
+/*   Updated: 2018/04/17 16:15:13 by tgelu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "inc/ft_printf.h"
-#include <stddef.h>
-#include <stdint.h>
+#include "libft.h"
 
-int		main(void)
+void	ft_putnbr(int nb)
 {
-	ft_printf("my :hello %hhi\n", (char)42);
-	printf("heu:hello %hhi\n", (char)42);
-	return (0);
+	long n;
+
+	n = (long)nb;
+	if (n < 0)
+	{
+		ft_putchar('-');
+		n = -1 * n;
+	}
+	if (n >= 10)
+		ft_putnbr(n / 10);
+	ft_putchar((n % 10) + 48);
 }

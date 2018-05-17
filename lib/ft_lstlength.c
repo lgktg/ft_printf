@@ -1,22 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_lstlength.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tgelu <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/05/10 14:03:59 by tgelu             #+#    #+#             */
-/*   Updated: 2018/05/17 17:23:54 by tgelu            ###   ########.fr       */
+/*   Created: 2018/04/18 17:04:40 by tgelu             #+#    #+#             */
+/*   Updated: 2018/04/18 17:09:45 by tgelu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "inc/ft_printf.h"
-#include <stddef.h>
-#include <stdint.h>
+#include "libft.h"
 
-int		main(void)
+int		ft_lstlength(t_list *list)
 {
-	ft_printf("my :hello %hhi\n", (char)42);
-	printf("heu:hello %hhi\n", (char)42);
-	return (0);
+	int		len;
+
+	len = 0;
+	while (list != NULL)
+	{
+		len++;
+		list = list->next;
+	}
+	return (len);
 }

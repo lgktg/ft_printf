@@ -1,22 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_lstprint.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tgelu <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/05/10 14:03:59 by tgelu             #+#    #+#             */
-/*   Updated: 2018/05/17 17:23:54 by tgelu            ###   ########.fr       */
+/*   Created: 2018/04/18 16:00:13 by tgelu             #+#    #+#             */
+/*   Updated: 2018/04/18 17:26:28 by tgelu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "inc/ft_printf.h"
-#include <stddef.h>
-#include <stdint.h>
+#include "libft.h"
 
-int		main(void)
+void	ft_lstprint(t_list *list)
 {
-	ft_printf("my :hello %hhi\n", (char)42);
-	printf("heu:hello %hhi\n", (char)42);
-	return (0);
+	t_list *current;
+
+	current = list;
+	while (current != NULL)
+	{
+		ft_putstr(current->content);
+		current = current->next;
+	}
 }

@@ -1,22 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strmap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tgelu <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/05/10 14:03:59 by tgelu             #+#    #+#             */
-/*   Updated: 2018/05/17 17:23:54 by tgelu            ###   ########.fr       */
+/*   Created: 2018/04/14 14:05:25 by tgelu             #+#    #+#             */
+/*   Updated: 2018/04/14 14:11:48 by tgelu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "inc/ft_printf.h"
-#include <stddef.h>
-#include <stdint.h>
+#include "libft.h"
 
-int		main(void)
+char	*ft_strmap(char const *s, char (*f)(char))
 {
-	ft_printf("my :hello %hhi\n", (char)42);
-	printf("heu:hello %hhi\n", (char)42);
-	return (0);
+	char	*ret;
+	int		i;
+
+	if (!s || !(ret = ft_strnew(ft_strlen(s))))
+		return (NULL);
+	i = 0;
+	while (s[i])
+	{
+		ret[i] = (*f)(s[i]);
+		i++;
+	}
+	ret[i] = '\0';
+	return (ret);
 }

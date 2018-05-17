@@ -1,22 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_memccpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tgelu <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/05/10 14:03:59 by tgelu             #+#    #+#             */
-/*   Updated: 2018/05/17 17:23:54 by tgelu            ###   ########.fr       */
+/*   Created: 2018/04/04 19:15:13 by tgelu             #+#    #+#             */
+/*   Updated: 2018/04/04 19:34:48 by tgelu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "inc/ft_printf.h"
-#include <stddef.h>
-#include <stdint.h>
+#include "libft.h"
 
-int		main(void)
+void	*ft_memccpy(void *dst, const void *src, int c, size_t n)
 {
-	ft_printf("my :hello %hhi\n", (char)42);
-	printf("heu:hello %hhi\n", (char)42);
-	return (0);
+	unsigned char	*dest;
+	unsigned char	*source;
+	size_t			i;
+
+	dest = (unsigned char *)dst;
+	source = (unsigned char *)src;
+	c = (unsigned char)c;
+	i = 0;
+	while (i < n)
+	{
+		if ((*dest++ = *source++) == c)
+			return (dest);
+		i++;
+	}
+	return (NULL);
 }

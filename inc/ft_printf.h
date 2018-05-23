@@ -6,7 +6,7 @@
 /*   By: tgelu <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/12 15:36:32 by tgelu             #+#    #+#             */
-/*   Updated: 2018/05/17 17:23:28 by tgelu            ###   ########.fr       */
+/*   Updated: 2018/05/20 17:21:26 by tgelu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,13 +41,16 @@ typedef struct		s_printf
 	int				attr; // #0- +	
 	int				convmod;
 	char			sign;
+	int				total;
 }					t_printf;
 
 int		ft_printf(const char *format, ...);
 int		parse_args(t_printf *pf, const char *format);
 void	process_arg(t_printf *pf);
 void	process_int(t_printf *pf);
+void	process_large_int(t_printf *pf);
+void	print_int(t_printf *pf, intmax_t value);
 void    buffer_add_string(t_printf *pf, char *str);
 void	buffer_add_char(t_printf *pf, char c);
-void    ft_itoa_base(intmax_t num, char *base, t_printf *pf);
+void    ft_itoa_base(uintmax_t num, char *base, t_printf *pf);
 #endif

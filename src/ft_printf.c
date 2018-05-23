@@ -6,7 +6,7 @@
 /*   By: tgelu <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/10 14:04:15 by tgelu             #+#    #+#             */
-/*   Updated: 2018/05/17 17:22:05 by tgelu            ###   ########.fr       */
+/*   Updated: 2018/05/20 17:15:24 by tgelu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ void	process_arg(t_printf *pf)
 {
 	if (pf->identifier == 'd' || pf->identifier == 'i')
 		process_int(pf);
+	else if (pf->identifier == 'D')
+		process_large_int(pf);
 }
 
 int		ft_printf(const char *format, ...)
@@ -25,10 +27,14 @@ int		ft_printf(const char *format, ...)
 
 	ft_bzero(pf.buff, BUFF_SIZE);
 	pf.buff_size = 0;
+	pf.total = 0;
 	va_start(pf.args, format);
 	count = parse_args(&pf, format);
 	if (pf.buff_size != 0)
+	{
+		pf.total += pf.buff_size;
 		write(1, pf.buff, pf.buff_size);
-	return (0);
+	}
+	return (pf.total);
 
 }

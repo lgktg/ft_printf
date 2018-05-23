@@ -6,7 +6,7 @@
 /*   By: tgelu <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/13 16:35:26 by tgelu             #+#    #+#             */
-/*   Updated: 2018/05/17 17:22:17 by tgelu            ###   ########.fr       */
+/*   Updated: 2018/05/18 22:23:05 by tgelu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ int			is_conv_modifier(const char *format)
 void		init_pf(t_printf *pf)
 {
 	pf->width = 0;
-	pf->prec = 0;
+	pf->prec = -1;
 	pf->attr = 0;
 	pf->convmod = 0;
 }
@@ -109,12 +109,12 @@ int			parse_simple_arg(t_printf *pf, const char *format)
 //		printf("char : %c at %d\n", format[i], i);
 		if (is_attribute(format[i]))
 			get_attribute(pf, format);
-		if (ft_isdigit(format[i]) && format[i] != '0' && format[i - 1] != '.')
+		if (!pf->width && ft_isdigit(format[i]) && format[i] != '0' && format[i - 1] != '.')
 			pf->width = ft_atoi(format + i);
 		if (format[i] == '.')
 			pf->prec = ft_atoi(format + i + 1);
-		if (is_conv_modifier(format))
-			set_conv_modifier(pf, format);
+		if (is_conv_modifier(format + i))
+			set_conv_modifier(pf, format + i);
 		if (is_identifier(format[i]))
 		{
 			pf->identifier = format[i];

@@ -1,37 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*   process_large_int.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tgelu <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/04/10 18:17:23 by tgelu             #+#    #+#             */
-/*   Updated: 2018/05/20 12:58:35 by tgelu            ###   ########.fr       */
+/*   Created: 2018/05/20 17:15:40 by tgelu             #+#    #+#             */
+/*   Updated: 2018/05/20 17:24:54 by tgelu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../inc/ft_printf.h"
 
-int		ft_atoi(const char *str)
+void	process_large_int(t_printf *pf)
 {
-	int i;
-	int neg;
-	int ret;
-
-	i = 0;
-	ret = 0;
-	neg = 1;
-	while ((str[i] >= 9 && str[i] <= 13) || str[i] == 32)
-		i++;
-	if (str[i] == '-' || str[i] == '+')
-	{
-		neg = (-(str[i] - 44) > 0 ? 1 : -1);
-		i++;
-	}
-	while (str[i] >= 48 && str[i] <= 57)
-	{
-		ret = ret * 10 + (int)str[i] - 48;
-		i++;
-	}
-	return (neg * ret);
+	pf->convmod = 0;
+	print_int(pf, va_arg(pf->args, long int));
 }
+

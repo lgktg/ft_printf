@@ -6,7 +6,7 @@
 /*   By: tgelu <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/15 17:11:06 by tgelu             #+#    #+#             */
-/*   Updated: 2018/05/17 17:21:30 by tgelu            ###   ########.fr       */
+/*   Updated: 2018/05/17 17:43:51 by tgelu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ void    buffer_add_char(t_printf *pf, char c)
 	{
 		write(1, pf->buff, pf->buff_size);
 		ft_bzero(pf->buff, BUFF_SIZE);
+		pf->total += pf->buff_size;
 		pf->buff_size = 0;
 		buffer_add_char(pf, c);
 	}

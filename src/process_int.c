@@ -6,17 +6,19 @@
 /*   By: tgelu <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/15 12:31:37 by tgelu             #+#    #+#             */
-/*   Updated: 2018/05/17 17:22:28 by tgelu            ###   ########.fr       */
+/*   Updated: 2018/05/20 19:12:11 by tgelu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/ft_printf.h"
 
-int			int_len(intmax_t c)
+int			int_len(intmax_t c, t_printf *pf)
 {
 	int		len;
 
 	len = 0;
+	if (c == 0 && pf->prec != 0)
+		return (1);
 	while (c != 0)
 	{
 		len++;
@@ -53,48 +55,64 @@ void		print_left_int(t_printf *pf, int len, intmax_t value)
 	}
 }
 
-void		print_int(t_printf *pf, int len, intmax_t value)
+void		print_int(t_printf *pf, intmax_t value)
 {
 	int		i;
+	int		offset;
+	int		len;
+	int		tmpprec;
 
+	//printf("prec:%d\n", pf->prec);
+	tmpprec = (pf->prec == -1) ? 0 : pf->prec;
+	len = int_len(value, pf);
 	pf->sign = (value < 0) ? '-' : '+';
+	offset = (pf->attr & 16 || pf->sign == '-');
 	value = (value < 0) ? -value : value;
-	i = -1;
+	i = 0;
 	if (pf->attr & 4)
 		print_left_int(pf, len, value);
 	else
 	{
-		pf->prec = (pf->prec == 0 && pf->attr & 2) ? pf->width : pf->prec;
-		while (++i < pf->width - pf->prec - len - (pf->sign == '-'))
-			buffer_add_char(pf, ' ');
-		if (pf->sign == '-' || pf->attr & 16)
+		if (offset && (pf->attr & 2) && pf->prec == -1)
 			buffer_add_char(pf, pf->sign);
-		while (pf->prec != 0 &&++i < pf->width - len)
+		else if (pf->attr & 8 && !(pf->attr & 16) && pf->width != 0 && !tmpprec)
+			buffer_add_char(pf, ' ');
+		while (i < pf->width - tmpprec - (offset || pf->attr & 8) && i < pf->width - len - (offset || pf->attr & 8))
+		{
+			buffer_add_char(pf, ((pf->attr & 2 && pf->prec == -1) ? '0' : ' '));
+			i++;
+		}
+		if ((offset || (pf->attr & 8)) && (!(pf->attr & 2) || pf->prec != -1))
+			buffer_add_char(pf, (offset ? pf->sign : ' '));
+		i = 0;
+		while (i < tmpprec - len)
+		{
 			buffer_add_char(pf, '0');
+			i++;
+		}
 		ft_itoa_base(value, "0123456789", pf);
 	}
 }
 
 void		process_int(t_printf *pf)
 {
-	intmax_t	ret;
+	void		*ret;
 	int			len;
 
 	ret = 0;
+	len = 0;
 	if (pf->convmod & 4)
-		ret = va_arg(pf->args, intmax_t);
+		print_int(pf, va_arg(pf->args, intmax_t));
 	else if (pf->convmod & 32)
-		ret = va_arg(pf->args, long long int);
+		print_int(pf, va_arg(pf->args, long long));
 	else if (pf->convmod & 16)
-		ret = va_arg(pf->args, long int);
+		print_int(pf, va_arg(pf->args, long));
 	else if (pf->convmod & 8)
-		ret = va_arg(pf->args, size_t);
+		print_int(pf, va_arg(pf->args, size_t));
 	else if (pf->convmod & 2)
-		ret = va_arg(pf->args, int);
+		print_int(pf, (char)va_arg(pf->args, int));
 	else if (pf->convmod & 1)
-		ret = va_arg(pf->args, int);
+		print_int(pf, (short)va_arg(pf->args, int));
 	else if (pf->convmod == 0)
-		ret = va_arg(pf->args, int);
-	len = int_len(ret);
-	print_int(pf, len, ret);
+		print_int(pf, va_arg(pf->args, int));
 }

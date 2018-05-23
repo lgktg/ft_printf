@@ -6,7 +6,7 @@
 /*   By: tgelu <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/15 13:56:16 by tgelu             #+#    #+#             */
-/*   Updated: 2018/05/17 17:22:39 by tgelu            ###   ########.fr       */
+/*   Updated: 2018/05/20 16:27:15 by tgelu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,11 @@ char	*ft_strrev(char *str)
 	return (str);
 }
 
-void	ft_itoa_base(intmax_t num, char *base, t_printf *pf)
+void	ft_itoa_base(uintmax_t num, char *base, t_printf *pf)
 {
 	intmax_t		base_s;
 	intmax_t		cpt;
-	intmax_t		numcp;
+	uintmax_t		numcp;
 	char			tmp[50];
 	int				i;
 
@@ -44,6 +44,11 @@ void	ft_itoa_base(intmax_t num, char *base, t_printf *pf)
 	base_s = ft_strlen(base);
 	cpt = 0;
 	numcp = num;
+	if (num == 0 && pf->prec != 0)
+	{
+		buffer_add_char(pf, '0');
+		return ;
+	}
 	while (numcp > 0)
 	{
 		numcp /= base_s;

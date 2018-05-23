@@ -6,7 +6,7 @@
 #    By: tgelu <marvin@42.fr>                       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/04/04 16:30:21 by tgelu             #+#    #+#              #
-#    Updated: 2018/05/20 17:17:22 by tgelu            ###   ########.fr        #
+#    Updated: 2018/05/23 17:50:14 by tgelu            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,8 @@ SRC_NAME = ft_printf.c \
 		   parser.c \
 		   process_int.c \
 		   util_int.c \
-		   process_large_int.c
+		   process_large_int.c \
+		   process_char.c
 LIB_NAME = ft_memset.c \
 		   ft_bzero.c \
 		   ft_memcpy.c \

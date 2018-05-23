@@ -6,7 +6,7 @@
 /*   By: tgelu <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/10 14:04:15 by tgelu             #+#    #+#             */
-/*   Updated: 2018/05/20 17:15:24 by tgelu            ###   ########.fr       */
+/*   Updated: 2018/05/23 17:46:27 by tgelu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ void	process_arg(t_printf *pf)
 		process_int(pf);
 	else if (pf->identifier == 'D')
 		process_large_int(pf);
+	else if (pf->identifier == 'c')
+		process_char(pf);
 }
 
 int		ft_printf(const char *format, ...)

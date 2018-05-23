@@ -6,7 +6,7 @@
 /*   By: tgelu <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/13 16:35:26 by tgelu             #+#    #+#             */
-/*   Updated: 2018/05/18 22:23:05 by tgelu            ###   ########.fr       */
+/*   Updated: 2018/05/23 17:44:07 by tgelu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int     is_identifier(char c)
 	if (c == 'd' || c == 'D' || c == 's' || c == 'S'
 			|| c == 'p' || c == 'i' || c == 'o' || c == 'O'
 			|| c == 'u' || c == 'U' || c == 'x' || c == 'X'
-			|| c == 'c' || c == 'C')
+			|| c == 'c' || c == 'C' || c == '%')
 		return (1);
 	return (0);
 }
@@ -88,6 +88,24 @@ int			is_conv_modifier(const char *format)
 	return (0);
 }
 
+void		set_width(t_printf *pf, const char *format)
+{
+	if (*format != '*')
+	{
+		pf->width = ft_atoi(format);
+	}
+	else if (*format == '*')
+		pf->width = va_arg(pf->args, int);
+}
+
+void		set_prec(t_printf *pf, const char *format)
+{
+	if (*(format + 1) != '*')
+		pf->prec = ft_atoi(format + 1);
+	else
+		pf->prec = va_arg(pf->args, int);
+}
+
 void		init_pf(t_printf *pf)
 {
 	pf->width = 0;
@@ -104,15 +122,15 @@ int			parse_simple_arg(t_printf *pf, const char *format)
 	i = 0;
 	len = 0;
 	init_pf(pf);
-	while (format[i] && format[i] != '%')
+	while (format[i])
 	{
 //		printf("char : %c at %d\n", format[i], i);
 		if (is_attribute(format[i]))
 			get_attribute(pf, format);
-		if (!pf->width && ft_isdigit(format[i]) && format[i] != '0' && format[i - 1] != '.')
-			pf->width = ft_atoi(format + i);
+		if (!pf->width && ((ft_isdigit(format[i]) && format[i] != '0') || (format[i] == '*')) && format[i - 1] != '.')
+			set_width(pf, format + i);
 		if (format[i] == '.')
-			pf->prec = ft_atoi(format + i + 1);
+			set_prec(pf, format + i);
 		if (is_conv_modifier(format + i))
 			set_conv_modifier(pf, format + i);
 		if (is_identifier(format[i]))

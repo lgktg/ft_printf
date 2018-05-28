@@ -6,7 +6,7 @@
 /*   By: tgelu <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/12 15:36:32 by tgelu             #+#    #+#             */
-/*   Updated: 2018/05/23 17:49:57 by tgelu            ###   ########.fr       */
+/*   Updated: 2018/05/28 16:37:38 by tgelu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include <unistd.h>
 # include <stdio.h>
 # include "../lib/libft.h"
-# define BUFF_SIZE 5
+# define BUFF_SIZE 32
 # define BYTE_TO_BINARY_PATTERN "%c%c%c%c%c%c%c%c"
 # define BYTE_TO_BINARY(byte)  \
 	(byte & 0x80 ? '1' : '0'), \
@@ -50,8 +50,11 @@ void	process_arg(t_printf *pf);
 void	process_int(t_printf *pf);
 void	process_large_int(t_printf *pf);
 void	process_char(t_printf *pf);
+void    print_char(t_printf *pf, wchar_t value);
+void	process_large_char(t_printf *pf);
 void	print_int(t_printf *pf, intmax_t value);
 void    buffer_add_string(t_printf *pf, char *str);
 void	buffer_add_char(t_printf *pf, char c);
-void    ft_itoa_base(uintmax_t num, char *base, t_printf *pf);
+void    ft_itoa_base_buff(uintmax_t num, char *base, t_printf *pf);
+char	*ft_convert_base(char *nbr, char *base_from, char *base_to);
 #endif

@@ -6,7 +6,7 @@
 /*   By: tgelu <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/15 12:31:37 by tgelu             #+#    #+#             */
-/*   Updated: 2018/05/23 17:29:48 by tgelu            ###   ########.fr       */
+/*   Updated: 2018/05/26 19:23:00 by tgelu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void		print_left_int(t_printf *pf, int len, intmax_t value)
 		buffer_add_char(pf, pf->sign);
 		while (++i < pf->prec - len)
 			buffer_add_char(pf, '0');
-		ft_itoa_base(value, "0123456789", pf);
+		ft_itoa_base_buff(value, "0123456789", pf);
 		while (++i < pf->width - len)
 			buffer_add_char(pf, ' ');
 	}
@@ -49,10 +49,39 @@ void		print_left_int(t_printf *pf, int len, intmax_t value)
 			buffer_add_char(pf, ' ');
 		while (++i < pf->prec - len)
 			buffer_add_char(pf, '0');
-		ft_itoa_base(value, "0123456789", pf);
+		ft_itoa_base_buff(value, "0123456789", pf);
 		while (++i < pf->width - len + (!(pf->attr & 8) && !(pf->sign == '-')))
 			buffer_add_char(pf, ' ');
 	}
+}
+
+void        print_right_int(t_printf *pf, int len, intmax_t value)
+{
+	int		tmpprec;
+	int		offset;
+	int		i;
+
+	tmpprec = (pf->prec == -1) ? 0 : pf->prec;
+	offset = (pf->attr & 16 || pf->sign == '-');
+	i = 0;
+	if (offset && (pf->attr & 2) && pf->prec == -1)
+		buffer_add_char(pf, pf->sign);
+	else if (pf->attr & 8 && !(pf->attr & 16) && pf->width != 0 && !tmpprec)
+		buffer_add_char(pf, ' ');
+	while (i < pf->width - tmpprec - (offset || pf->attr & 8) && i < pf->width - len - (offset || pf->attr & 8))
+	{
+		buffer_add_char(pf, ((pf->attr & 2 && pf->prec == -1) ? '0' : ' '));
+		i++;
+	}
+	if ((offset || (pf->attr & 8)) && (!(pf->attr & 2) || pf->prec != -1))
+		buffer_add_char(pf, (offset ? pf->sign : ' '));
+	i = 0;
+	while (i < tmpprec - len)
+	{
+		buffer_add_char(pf, '0');
+		i++;
+	}
+	ft_itoa_base_buff(value, "0123456789", pf);
 }
 
 void		print_int(t_printf *pf, intmax_t value)
@@ -72,35 +101,11 @@ void		print_int(t_printf *pf, intmax_t value)
 	if (pf->attr & 4)
 		print_left_int(pf, len, value);
 	else
-	{
-		if (offset && (pf->attr & 2) && pf->prec == -1)
-			buffer_add_char(pf, pf->sign);
-		else if (pf->attr & 8 && !(pf->attr & 16) && pf->width != 0 && !tmpprec)
-			buffer_add_char(pf, ' ');
-		while (i < pf->width - tmpprec - (offset || pf->attr & 8) && i < pf->width - len - (offset || pf->attr & 8))
-		{
-			buffer_add_char(pf, ((pf->attr & 2 && pf->prec == -1) ? '0' : ' '));
-			i++;
-		}
-		if ((offset || (pf->attr & 8)) && (!(pf->attr & 2) || pf->prec != -1))
-			buffer_add_char(pf, (offset ? pf->sign : ' '));
-		i = 0;
-		while (i < tmpprec - len)
-		{
-			buffer_add_char(pf, '0');
-			i++;
-		}
-		ft_itoa_base(value, "0123456789", pf);
-	}
+		print_right_int(pf, len, value);
 }
 
 void		process_int(t_printf *pf)
 {
-	void		*ret;
-	int			len;
-
-	ret = 0;
-	len = 0;
 	if (pf->convmod & 4)
 		print_int(pf, va_arg(pf->args, intmax_t));
 	else if (pf->convmod & 32)

@@ -6,7 +6,7 @@
 #    By: tgelu <marvin@42.fr>                       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/04/04 16:30:21 by tgelu             #+#    #+#              #
-#    Updated: 2018/05/23 17:50:14 by tgelu            ###   ########.fr        #
+#    Updated: 2018/05/26 21:03:58 by tgelu            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,12 +25,14 @@ OBJ_PATH = ./obj
 OBJLIB_PATH = ./obj
 
 SRC_NAME = ft_printf.c \
+		   util.c \
 		   buffer.c \
 		   parser.c \
 		   process_int.c \
 		   util_int.c \
 		   process_large_int.c \
-		   process_char.c
+		   process_char.c \
+		   process_large_char.c
 LIB_NAME = ft_memset.c \
 		   ft_bzero.c \
 		   ft_memcpy.c \

@@ -6,32 +6,13 @@
 /*   By: tgelu <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/15 13:56:16 by tgelu             #+#    #+#             */
-/*   Updated: 2018/05/20 16:27:15 by tgelu            ###   ########.fr       */
+/*   Updated: 2018/05/26 19:17:58 by tgelu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/ft_printf.h"
 
-char	*ft_strrev(char *str)
-{
-	int		len;
-	char	t;
-	int		i;
-
-	i = 0;
-	len = ft_strlen(str) - 1;
-	while (i <= len)
-	{
-		t = str[i];
-		str[i] = str[len];
-		str[len] = t;
-		i++;
-		len--;
-	}
-	return (str);
-}
-
-void	ft_itoa_base(uintmax_t num, char *base, t_printf *pf)
+void	ft_itoa_base_buff(uintmax_t num, char *base, t_printf *pf)
 {
 	intmax_t		base_s;
 	intmax_t		cpt;

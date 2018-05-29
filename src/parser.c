@@ -6,7 +6,7 @@
 /*   By: tgelu <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/13 16:35:26 by tgelu             #+#    #+#             */
-/*   Updated: 2018/05/23 17:44:07 by tgelu            ###   ########.fr       */
+/*   Updated: 2018/05/28 20:52:39 by tgelu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,7 +158,7 @@ int			parse_args(t_printf *pf, const char *format)
 
 	i = 0;
 	len = 0;
-	while (format[i])
+	while (pf->err == 0 && format[i])
 	{
 		if (format[i] == '%')
 		{

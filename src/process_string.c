@@ -6,7 +6,7 @@
 /*   By: tgelu <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/28 18:18:45 by tgelu             #+#    #+#             */
-/*   Updated: 2018/05/29 18:53:15 by tgelu            ###   ########.fr       */
+/*   Updated: 2018/05/29 20:17:19 by tgelu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	print_left_spaces(t_printf *pf, char *str, int len)
 	if (!(pf->attr & 4))
 	{
 		i = 0;
-		while (i < pf->width - len || i + ft_strlen(str) < pf->width)
+		while (i + len < pf->width || i + ft_strlen(str) < pf->width)
 		{
 			buffer_add_char(pf, ' ');
 			i++;
@@ -65,6 +65,8 @@ void	print_string(t_printf *pf, char *str)
 
 void	process_string(t_printf *pf)
 {
-	if (pf->identifier == 's')
-		print_string(pf, va_arg(pf->args, char*));	
+	if (pf->identifier == 's' && !(pf->convmod & 16))
+		print_string(pf, va_arg(pf->args, char*));
+	else if (pf->convmod & 16)
+		process_large_string(pf);
 }

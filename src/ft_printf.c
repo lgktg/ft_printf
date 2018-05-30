@@ -6,7 +6,7 @@
 /*   By: tgelu <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/10 14:04:15 by tgelu             #+#    #+#             */
-/*   Updated: 2018/05/29 17:19:55 by tgelu            ###   ########.fr       */
+/*   Updated: 2018/05/30 21:02:38 by tgelu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,16 @@ void	process_arg(t_printf *pf)
 		process_large_int(pf);
 	else if (pf->identifier == 'c' || pf->identifier == 'C' || pf->identifier == '%')
 		process_char(pf);
-	else if (pf->identifier == 's' || pf->identifier == 'S')
+	else if (pf->identifier == 's')
 		process_string(pf);
+	else if (pf->identifier == 'S')
+		process_large_string(pf);
+	else if (pf->identifier == 'u' || pf->identifier == 'U')
+		process_unsigned(pf);
+	else if (pf->identifier == 'o' || pf->identifier == 'O')
+		process_octal(pf);
+	else if (pf->identifier == 'x' || pf->identifier == 'X')
+		process_hexa(pf);
 }
 
 int		ft_printf(const char *format, ...)

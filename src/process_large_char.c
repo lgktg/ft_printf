@@ -6,7 +6,7 @@
 /*   By: tgelu <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/26 19:13:40 by tgelu             #+#    #+#             */
-/*   Updated: 2018/05/28 20:59:33 by tgelu            ###   ########.fr       */
+/*   Updated: 2018/05/29 20:06:54 by tgelu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void		process_large_char(t_printf *pf, wchar_t value)
 	// 0x80 = 10000000
 
 	if (value <= 0x7F)
-		print_char(pf, (char)value);
+		buffer_add_char(pf, (char)value);
 	else if (value <= 0x7FF)
 		print_two_bytes(pf, value);
 	else if (value <= 0xFFFF)

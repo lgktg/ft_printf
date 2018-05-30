@@ -6,7 +6,7 @@
 /*   By: tgelu <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/12 15:36:32 by tgelu             #+#    #+#             */
-/*   Updated: 2018/05/29 17:29:25 by tgelu            ###   ########.fr       */
+/*   Updated: 2018/05/30 21:02:55 by tgelu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,10 @@ void	process_char(t_printf *pf);
 void    print_char(t_printf *pf, wchar_t value);
 void	process_large_char(t_printf *pf, wchar_t value);
 void	process_string(t_printf *pf);
+void	process_large_string(t_printf *pf);
+void	process_unsigned(t_printf *pf);
+void	process_octal(t_printf *pf);
+void	process_hexa(t_printf *pf);
 void	print_string(t_printf *pf, char *str);
 void	print_int(t_printf *pf, intmax_t value);
 void    buffer_add_string(t_printf *pf, char *str);
@@ -61,4 +65,5 @@ void	buffer_add_char(t_printf *pf, char c);
 void	buffer_clean(t_printf *pf);
 void    ft_itoa_base_buff(uintmax_t num, char *base, t_printf *pf);
 char	*ft_convert_base(char *nbr, char *base_from, char *base_to);
+int		get_bytes_number(wchar_t value);
 #endif

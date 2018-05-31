@@ -6,7 +6,7 @@
 /*   By: tgelu <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/10 14:04:15 by tgelu             #+#    #+#             */
-/*   Updated: 2018/05/30 21:02:38 by tgelu            ###   ########.fr       */
+/*   Updated: 2018/05/31 19:23:08 by tgelu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ void	process_arg(t_printf *pf)
 		process_octal(pf);
 	else if (pf->identifier == 'x' || pf->identifier == 'X')
 		process_hexa(pf);
+	else if (pf->identifier == 'p')
+		process_pointer(pf);
 }
 
 int		ft_printf(const char *format, ...)

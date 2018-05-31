@@ -6,7 +6,7 @@
 /*   By: tgelu <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/13 16:35:26 by tgelu             #+#    #+#             */
-/*   Updated: 2018/05/29 19:46:58 by tgelu            ###   ########.fr       */
+/*   Updated: 2018/05/31 19:51:16 by tgelu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,15 +34,15 @@ void	get_attribute(t_printf *pf, const char *format)
 	while (is_attribute(*format))
 	{
 		if (*format == '#')
-			pf->attr |= (*format == '#');
+			pf->attr |= 1;
 		if (*format == '0' && !ft_isdigit(*(format - 1)))
-			pf->attr |= (*format == '0') << 1;
+			pf->attr |= 1 << 1;
 		if (*format == '-')
-			pf->attr |= (*format == '-') << 2;
+			pf->attr |= 1 << 2;
 		if (*format == ' ')
-			pf->attr |= (*format == ' ') << 3;
+			pf->attr |= 1 << 3;
 		if (*format == '+')
-			pf->attr |= (*format == '+') << 4;
+			pf->attr |= 1 << 4;
 		format++;
 	}
 }

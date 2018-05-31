@@ -6,13 +6,13 @@
 /*   By: tgelu <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/15 17:11:06 by tgelu             #+#    #+#             */
-/*   Updated: 2018/05/28 21:00:21 by tgelu            ###   ########.fr       */
+/*   Updated: 2018/05/31 21:01:53 by tgelu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/ft_printf.h"
 
-void    buffer_add_char(t_printf *pf, char c)
+void	buffer_add_char(t_printf *pf, char c)
 {
 	if (pf->buff_size + 2 > BUFF_SIZE)
 	{

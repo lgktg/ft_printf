@@ -6,7 +6,7 @@
 /*   By: tgelu <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/15 12:31:37 by tgelu             #+#    #+#             */
-/*   Updated: 2018/05/30 21:07:25 by tgelu            ###   ########.fr       */
+/*   Updated: 2018/05/31 21:19:20 by tgelu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void		print_left_int(t_printf *pf, int len, intmax_t value)
 	}
 }
 
-void        print_right_int(t_printf *pf, int len, intmax_t value)
+void		print_right_int(t_printf *pf, int len, intmax_t value)
 {
 	int		tmpprec;
 	int		offset;
@@ -68,19 +68,18 @@ void        print_right_int(t_printf *pf, int len, intmax_t value)
 		buffer_add_char(pf, pf->sign);
 	else if (pf->attr & 8 && !(pf->attr & 16) && pf->width != 0 && !tmpprec)
 		buffer_add_char(pf, ' ');
-	while (i < pf->width - tmpprec - (offset || pf->attr & 8) && i < pf->width - len - (offset || pf->attr & 8))
+	while (i < pf->width - tmpprec - (offset || pf->attr & 8)
+			&& i < pf->width - len - (offset || pf->attr & 8))
 	{
 		buffer_add_char(pf, ((pf->attr & 2 && pf->prec == -1) ? '0' : ' '));
 		i++;
 	}
-	if ((offset || (pf->attr & 8)) && (!(pf->attr & 2) || pf->prec != -1) && !(pf->identifier == 'u'))
+	if ((offset || (pf->attr & 8)) && (!(pf->attr & 2)
+				|| pf->prec != -1) && !(pf->identifier == 'u'))
 		buffer_add_char(pf, (offset ? pf->sign : ' '));
-	i = 0;
-	while (i < tmpprec - len)
-	{
+	i = -1;
+	while (++i < tmpprec - len)
 		buffer_add_char(pf, '0');
-		i++;
-	}
 	ft_itoa_base_buff(value, "0123456789", pf);
 }
 
@@ -91,7 +90,6 @@ void		print_int(t_printf *pf, intmax_t value)
 	int		len;
 	int		tmpprec;
 
-	//printf("prec:%d\n", pf->prec);
 	tmpprec = (pf->prec == -1) ? 0 : pf->prec;
 	len = int_len(value, pf);
 	pf->sign = (value < 0) ? '-' : '+';

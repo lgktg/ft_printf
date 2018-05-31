@@ -6,7 +6,7 @@
 /*   By: tgelu <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/28 18:18:45 by tgelu             #+#    #+#             */
-/*   Updated: 2018/05/29 20:17:19 by tgelu            ###   ########.fr       */
+/*   Updated: 2018/05/31 21:35:54 by tgelu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	print_left_spaces(t_printf *pf, char *str, int len)
 
 void	print_right_spaces(t_printf *pf, char *str, int len)
 {
-	int     i;
+	int		i;
 
 	if (pf->attr & 4)
 	{

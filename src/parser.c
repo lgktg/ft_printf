@@ -6,13 +6,13 @@
 /*   By: tgelu <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/13 16:35:26 by tgelu             #+#    #+#             */
-/*   Updated: 2018/05/31 19:51:16 by tgelu            ###   ########.fr       */
+/*   Updated: 2018/05/31 21:12:51 by tgelu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/ft_printf.h"
 
-int     is_identifier(char c)
+int		is_identifier(char c)
 {
 	if (c == 'd' || c == 'D' || c == 's' || c == 'S'
 			|| c == 'p' || c == 'i' || c == 'o' || c == 'O'
@@ -47,7 +47,7 @@ void	get_attribute(t_printf *pf, const char *format)
 	}
 }
 
-void		set_conv_modifier(t_printf *pf, const char *format)
+void	set_conv_modifier(t_printf *pf, const char *format)
 {
 	if (*format == 'h')
 	{
@@ -64,12 +64,12 @@ void		set_conv_modifier(t_printf *pf, const char *format)
 			pf->convmod |= 1 << 4;
 	}
 	if (*format == 'j')
-		pf->convmod |= 1 << 2;		
+		pf->convmod |= 1 << 2;
 	if (*format == 'z')
 		pf->convmod |= 1 << 3;
 }
 
-int			is_conv_modifier(const char *format)
+int		is_conv_modifier(const char *format)
 {
 	if (*format == 'h')
 	{
@@ -88,7 +88,7 @@ int			is_conv_modifier(const char *format)
 	return (0);
 }
 
-void		set_width(t_printf *pf, const char *format, int *i)
+void	set_width(t_printf *pf, const char *format, int *i)
 {
 	if (*(format + *i) != '*')
 	{
@@ -101,7 +101,7 @@ void		set_width(t_printf *pf, const char *format, int *i)
 	(*i)--;
 }
 
-void		set_prec(t_printf *pf, const char *format, int *i)
+void	set_prec(t_printf *pf, const char *format, int *i)
 {
 	if (*(format + *i + 1) != '*')
 		pf->prec = ft_atoi(format + *i + 1);
@@ -111,28 +111,28 @@ void		set_prec(t_printf *pf, const char *format, int *i)
 		(*i)++;
 }
 
-void		init_pf(t_printf *pf)
+void	init_pf(t_printf *pf, int *len)
 {
 	pf->width = 0;
 	pf->prec = -1;
 	pf->attr = 0;
 	pf->convmod = 0;
+	*len = 0;
 }
 
-int			parse_simple_arg(t_printf *pf, const char *format)
+int		parse_simple_arg(t_printf *pf, const char *format)
 {
 	int		len;
 	int		i;
 
-	i = 0;
-	len = 0;
-	init_pf(pf);
-	while (format[i])
+	i = -1;
+	init_pf(pf, &len);
+	while (format[++i])
 	{
-//		printf("char : %c at %d\n", format[i], i);
 		if (is_attribute(format[i]))
 			get_attribute(pf, format);
-		if (!pf->width && ((ft_isdigit(format[i]) && format[i] != '0') || (format[i] == '*')) && format[i - 1] != '.')
+		if (!pf->width && ((ft_isdigit(format[i]) && format[i] != '0')
+					|| (format[i] == '*')) && format[i - 1] != '.')
 			set_width(pf, format, &i);
 		if (format[i] == '.')
 			set_prec(pf, format, &i);
@@ -143,19 +143,13 @@ int			parse_simple_arg(t_printf *pf, const char *format)
 			pf->identifier = format[i];
 			break ;
 		}
-		i++;
 		len++;
 	}
-//	printf("identifier : %c\n", pf->identifier);
-//	printf("attribute : "BYTE_TO_BINARY_PATTERN"\n", BYTE_TO_BINARY(pf->attr));
-//	printf("width : %d\n", pf->width);
-//	printf("precision : %d\n", pf->prec);
-//	printf("convmod : "BYTE_TO_BINARY_PATTERN"\n", BYTE_TO_BINARY(pf->convmod));
 	process_arg(pf);
 	return (len);
 }
 
-int			parse_args(t_printf *pf, const char *format)
+int		parse_args(t_printf *pf, const char *format)
 {
 	int		len;
 	int		i;

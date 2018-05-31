@@ -6,15 +6,15 @@
 /*   By: tgelu <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/30 21:14:58 by tgelu             #+#    #+#             */
-/*   Updated: 2018/05/31 19:43:10 by tgelu            ###   ########.fr       */
+/*   Updated: 2018/05/31 21:17:45 by tgelu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/ft_printf.h"
 
-static int         int_len(uintmax_t c, t_printf *pf)
+static int	int_len(uintmax_t c, t_printf *pf)
 {
-	int     len;
+	int		len;
 
 	len = 0;
 	if (c == 0 && pf->prec != 0)
@@ -29,16 +29,17 @@ static int         int_len(uintmax_t c, t_printf *pf)
 	return (len);
 }
 
-void				add_prefix(t_printf *pf, uintmax_t value)
+void		add_prefix(t_printf *pf, uintmax_t value)
 {
 	if (pf->attr & 1 && (value != 0 || pf->identifier == 'p'))
 	{
 		buffer_add_char(pf, '0');
-		buffer_add_char(pf, (pf->identifier == 'x' || pf->identifier == 'p') ? 'x' : 'X');
+		buffer_add_char(pf, (pf->identifier == 'x'
+			|| pf->identifier == 'p') ? 'x' : 'X');
 	}
 }
 
-static void        print_left_hexa(t_printf *pf, int len, uintmax_t value, char *base)
+static void	print_left_hexa(t_printf *pf, int len, uintmax_t value, char *base)
 {
 	int		i;
 	int		tmpprec;
@@ -59,7 +60,7 @@ static void        print_left_hexa(t_printf *pf, int len, uintmax_t value, char 
 	}
 }
 
-static void        print_right_hexa(t_printf *pf, int len, uintmax_t value, char *base)
+static void	print_right_hexa(t_printf *pf, int len, uintmax_t value, char *base)
 {
 	int		i;
 	int		tmpprec;
@@ -86,13 +87,12 @@ static void        print_right_hexa(t_printf *pf, int len, uintmax_t value, char
 	ft_itoa_base_buff(value, base, pf);
 }
 
-
-void        print_hexa(t_printf *pf, uintmax_t value)
+void		print_hexa(t_printf *pf, uintmax_t value)
 {
-	int     i;
-	int     offset;
-	int     len;
-	int     tmpprec;
+	int		i;
+	int		offset;
+	int		len;
+	int		tmpprec;
 	char	base[16];
 
 	if (pf->identifier == 'x' || pf->identifier == 'p')
@@ -110,7 +110,7 @@ void        print_hexa(t_printf *pf, uintmax_t value)
 void		process_hexa(t_printf *pf)
 {
 	void	*ret;
-	
+
 	pf->sign = '+';
 	if (pf->convmod & 4)
 		print_hexa(pf, va_arg(pf->args, uintmax_t));

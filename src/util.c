@@ -6,13 +6,13 @@
 /*   By: tgelu <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/22 17:29:00 by tgelu             #+#    #+#             */
-/*   Updated: 2018/05/26 20:22:07 by tgelu            ###   ########.fr       */
+/*   Updated: 2018/05/31 21:40:51 by tgelu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 
-static int		ft_strlen(char *str)
+static int	ft_strlen(char *str)
 {
 	int i;
 
@@ -22,7 +22,7 @@ static int		ft_strlen(char *str)
 	return (i);
 }
 
-static char		*ft_strrev(char *str)
+static char	*ft_strrev(char *str)
 {
 	int		i;
 	int		l;
@@ -41,7 +41,7 @@ static char		*ft_strrev(char *str)
 	return (str);
 }
 
-int		ft_atoi_base(char *str, char *base)
+int			ft_atoi_base(char *str, char *base)
 {
 	long int i;
 	long int c;
@@ -66,7 +66,7 @@ int		ft_atoi_base(char *str, char *base)
 		final = (final * ft_strlen(base)) + c;
 		i++;
 	}
-	return (final); // * sign);
+	return (final);
 }
 
 char		*ft_itoa_base(int num, char *base)

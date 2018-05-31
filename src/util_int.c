@@ -6,40 +6,42 @@
 /*   By: tgelu <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/15 13:56:16 by tgelu             #+#    #+#             */
-/*   Updated: 2018/05/26 19:17:58 by tgelu            ###   ########.fr       */
+/*   Updated: 2018/05/31 21:50:06 by tgelu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/ft_printf.h"
 
-void	ft_itoa_base_buff(uintmax_t num, char *base, t_printf *pf)
+static void	ft_init_itoa_base(int *i, uintmax_t *cpt)
 {
-	intmax_t		base_s;
+	*cpt = 0;
+	*i = -1;
+}
+
+void		ft_itoa_base_buff(uintmax_t num, char *base, t_printf *pf)
+{
 	intmax_t		cpt;
 	uintmax_t		numcp;
 	char			tmp[50];
 	int				i;
 
-	i = -1;
 	ft_bzero(tmp, 50);
-	base_s = ft_strlen(base);
-	cpt = 0;
+	ft_init_itoa_base(&i, &cpt);
 	numcp = num;
 	if (num == 0 && pf->prec != 0)
-	{
 		buffer_add_char(pf, '0');
+	if (num == 0 && pf->prec != 0)
 		return ;
-	}
 	while (numcp > 0)
 	{
-		numcp /= base_s;
+		numcp /= ft_strlen(base);
 		cpt++;
 	}
 	while (cpt > 0)
 	{
-		tmp[cpt - 1] = base[(num % base_s)];
+		tmp[cpt - 1] = base[(num % ft_strlen(base))];
 		cpt--;
-		num /= base_s;
+		num /= ft_strlen(base);
 	}
 	while (tmp[++i])
 		buffer_add_char(pf, tmp[i]);

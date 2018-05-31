@@ -6,7 +6,7 @@
 /*   By: tgelu <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/23 17:44:20 by tgelu             #+#    #+#             */
-/*   Updated: 2018/05/28 21:19:25 by tgelu            ###   ########.fr       */
+/*   Updated: 2018/05/31 21:13:51 by tgelu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 int		get_bytes_number(wchar_t value)
 {
-
 	if (value <= 0x7F)
 		return (1);
 	else if (value <= 0x7FF)
@@ -31,7 +30,6 @@ void	print_char_left(t_printf *pf, wchar_t value)
 	int		i;
 
 	i = 0;
-
 	if (value > 0x7F)
 		process_large_char(pf, value);
 	else
@@ -63,7 +61,9 @@ void	print_char(t_printf *pf, wchar_t value)
 {
 	int		tmpprec;
 
-	if (((pf->convmod & 16 || pf->identifier == 'C') && value < 0) || (value >= 0xD800 && value <= 0xDBFF) || (value >= 0xDC00 && value <= 0xDFFF))
+	if (((pf->convmod & 16 || pf->identifier == 'C') && value < 0)
+			|| (value >= 0xD800 && value <= 0xDBFF)
+			|| (value >= 0xDC00 && value <= 0xDFFF))
 	{
 		pf->err = 1;
 		return ;

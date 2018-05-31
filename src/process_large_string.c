@@ -6,7 +6,7 @@
 /*   By: tgelu <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/29 19:51:04 by tgelu             #+#    #+#             */
-/*   Updated: 2018/05/29 21:09:44 by tgelu            ###   ########.fr       */
+/*   Updated: 2018/05/31 21:23:01 by tgelu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ static void		print_left_spaces(t_printf *pf, wchar_t *str)
 	{
 		i = 0;
 		total = 0;
-		while (str[i] && (total + get_bytes_number(str[i]) <= pf->prec || pf->prec == -1))
+		while (str[i] && (total + get_bytes_number(str[i]) <= pf->prec
+			|| pf->prec == -1))
 		{
 			total += get_bytes_number(str[i]);
 			i++;
@@ -38,7 +39,7 @@ static void		print_left_spaces(t_printf *pf, wchar_t *str)
 static void		print_right_spaces(t_printf *pf, wchar_t *str, int bytes)
 {
 	int		i;
-	
+
 	if (pf->attr & 4)
 	{
 		i = bytes;
@@ -46,11 +47,11 @@ static void		print_right_spaces(t_printf *pf, wchar_t *str, int bytes)
 		{
 			buffer_add_char(pf, ' ');
 			i++;
-		}	
+		}
 	}
 }
 
-void		print_large_string(t_printf *pf, wchar_t *str)
+void			print_large_string(t_printf *pf, wchar_t *str)
 {
 	int		i;
 	int		bytes;
@@ -58,7 +59,8 @@ void		print_large_string(t_printf *pf, wchar_t *str)
 	bytes = 0;
 	i = 0;
 	print_left_spaces(pf, str);
-	while (str[i] && (bytes + get_bytes_number(str[i]) <= pf->prec || pf->prec == -1))
+	while (str[i] && (bytes + get_bytes_number(str[i]) <= pf->prec
+		|| pf->prec == -1))
 	{
 		if (str[i] < 0 || (str[i] >= 0xD800 && str[i] <= 0xDBFF)
 				|| (str[i] >= 0xDC00 && str[i] <= 0xDFFF))
@@ -73,7 +75,7 @@ void		print_large_string(t_printf *pf, wchar_t *str)
 	print_right_spaces(pf, str, bytes);
 }
 
-void		process_large_string(t_printf *pf)
+void			process_large_string(t_printf *pf)
 {
 	if (pf->identifier == 'S' || (pf->convmod & 16 && pf->identifier == 's'))
 		print_large_string(pf, va_arg(pf->args, wchar_t *));

@@ -6,7 +6,7 @@
 /*   By: tgelu <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/10 14:04:15 by tgelu             #+#    #+#             */
-/*   Updated: 2018/05/31 19:23:08 by tgelu            ###   ########.fr       */
+/*   Updated: 2018/05/31 21:02:49 by tgelu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ void	process_arg(t_printf *pf)
 		process_int(pf);
 	else if (pf->identifier == 'D')
 		process_large_int(pf);
-	else if (pf->identifier == 'c' || pf->identifier == 'C' || pf->identifier == '%')
+	else if (pf->identifier == 'c' || pf->identifier == 'C'
+			|| pf->identifier == '%')
 		process_char(pf);
 	else if (pf->identifier == 's')
 		process_string(pf);
@@ -55,5 +56,4 @@ int		ft_printf(const char *format, ...)
 	if (pf.err == 1)
 		return (-1);
 	return (pf.total);
-
 }

@@ -6,15 +6,15 @@
 /*   By: tgelu <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/29 21:18:29 by tgelu             #+#    #+#             */
-/*   Updated: 2018/05/30 21:10:43 by tgelu            ###   ########.fr       */
+/*   Updated: 2018/05/31 21:38:57 by tgelu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/ft_printf.h"
 
-static int         int_len(uintmax_t c, t_printf *pf)
+static int		int_len(uintmax_t c, t_printf *pf)
 {
-	int     len;
+	int		len;
 
 	len = 0;
 	if (c == 0 && pf->prec != 0)
@@ -27,9 +27,9 @@ static int         int_len(uintmax_t c, t_printf *pf)
 	return (len);
 }
 
-static void        print_left_unsigned(t_printf *pf, int len, uintmax_t value)
+static void		print_left_unsigned(t_printf *pf, int len, uintmax_t value)
 {
-	int     i;
+	int		i;
 
 	i = -1;
 	if (pf->attr & 16)
@@ -52,10 +52,10 @@ static void        print_left_unsigned(t_printf *pf, int len, uintmax_t value)
 	}
 }
 
-static void        print_right_unsigned(t_printf *pf, int len, uintmax_t value)
+static void		print_right_unsigned(t_printf *pf, int len, uintmax_t value)
 {
-	int     tmpprec;
-	int     i;
+	int		tmpprec;
+	int		i;
 
 	tmpprec = (pf->prec == -1) ? 0 : pf->prec;
 	i = 0;
@@ -66,7 +66,8 @@ static void        print_right_unsigned(t_printf *pf, int len, uintmax_t value)
 		buffer_add_char(pf, ((pf->attr & 2 && pf->prec == -1) ? '0' : ' '));
 		i++;
 	}
-	if (pf->attr & 8 && (!(pf->attr & 2) || pf->prec != -1) && !(pf->identifier == 'u'))
+	if (pf->attr & 8 && (!(pf->attr & 2)
+		|| pf->prec != -1) && !(pf->identifier == 'u'))
 		buffer_add_char(pf, ' ');
 	i = 0;
 	while (i < tmpprec - len)
@@ -77,15 +78,13 @@ static void        print_right_unsigned(t_printf *pf, int len, uintmax_t value)
 	ft_itoa_base_buff(value, "0123456789", pf);
 }
 
-
-void        print_unsigned(t_printf *pf, uintmax_t value)
+void			print_unsigned(t_printf *pf, uintmax_t value)
 {
-	int     i;
-	int     offset;
-	int     len;
-	int     tmpprec;
+	int		i;
+	int		offset;
+	int		len;
+	int		tmpprec;
 
-	//printf("prec:%d\n", pf->prec);
 	tmpprec = (pf->prec == -1) ? 0 : pf->prec;
 	len = int_len(value, pf);
 	i = 0;
@@ -95,7 +94,7 @@ void        print_unsigned(t_printf *pf, uintmax_t value)
 		print_right_unsigned(pf, len, value);
 }
 
-void		process_unsigned(t_printf *pf)
+void			process_unsigned(t_printf *pf)
 {
 	pf->sign = '+';
 	if (pf->identifier == 'U')

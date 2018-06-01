@@ -6,7 +6,7 @@
 /*   By: tgelu <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/28 18:18:45 by tgelu             #+#    #+#             */
-/*   Updated: 2018/05/31 21:35:54 by tgelu            ###   ########.fr       */
+/*   Updated: 2018/06/01 17:29:22 by tgelu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	print_left_spaces(t_printf *pf, char *str, int len)
 		i = 0;
 		while (i + len < pf->width || i + ft_strlen(str) < pf->width)
 		{
-			buffer_add_char(pf, ' ');
+			buffer_add_char(pf, (pf->attr & 2) ? '0' : ' ');
 			i++;
 		}
 	}
@@ -36,7 +36,7 @@ void	print_right_spaces(t_printf *pf, char *str, int len)
 		i = 0;
 		while (i + len < pf->width || i + ft_strlen(str) < pf->width)
 		{
-			buffer_add_char(pf, ' ');
+			buffer_add_char(pf, (pf->attr & 2) ? '0' : ' ');
 			i++;
 		}
 	}

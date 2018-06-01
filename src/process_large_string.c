@@ -6,7 +6,7 @@
 /*   By: tgelu <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/29 19:51:04 by tgelu             #+#    #+#             */
-/*   Updated: 2018/05/31 21:23:01 by tgelu            ###   ########.fr       */
+/*   Updated: 2018/06/01 15:26:25 by tgelu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,11 @@ void			print_large_string(t_printf *pf, wchar_t *str)
 	int		i;
 	int		bytes;
 
+	if (str == NULL)
+	{
+		print_string(pf, "(null)");
+		return ;
+	}
 	bytes = 0;
 	i = 0;
 	print_left_spaces(pf, str);

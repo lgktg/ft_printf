@@ -6,7 +6,7 @@
 /*   By: tgelu <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/30 14:11:07 by tgelu             #+#    #+#             */
-/*   Updated: 2018/05/31 21:35:40 by tgelu            ###   ########.fr       */
+/*   Updated: 2018/06/01 17:50:20 by tgelu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static void	print_left_spaces(t_printf *pf, int len, int *i)
 				|| *i < pf->prec - len - (pf->attr & 1))
 		{
 			buffer_add_char(pf, ((pf->attr & 2 && pf->prec == -1)
-						|| pf->width == 0) ? '0' : ' ');
+						|| pf->width == 0 || *i >= pf->width - pf->prec) ? '0' : ' ');
 			(*i)++;
 		}
 	}
@@ -143,5 +143,21 @@ void		print_octal(t_printf *pf, uintmax_t value)
 
 void		process_octal(t_printf *pf)
 {
-	print_octal(pf, va_arg(pf->args, uintmax_t));
+	pf->sign = '+';
+	if (pf->identifier == 'O')
+		pf->convmod |= 1 << 4;
+	if (pf->convmod & 4)
+		print_octal(pf, va_arg(pf->args, uintmax_t));
+	else if (pf->convmod & 32)
+		print_octal(pf, va_arg(pf->args, unsigned long long));
+	else if (pf->convmod & 16)
+		print_octal(pf, va_arg(pf->args, unsigned long));
+	else if (pf->convmod & 8)
+		print_octal(pf, va_arg(pf->args, size_t));
+	else if (pf->convmod & 2)
+		print_octal(pf, (unsigned char)va_arg(pf->args, unsigned int));
+	else if (pf->convmod & 1)
+		print_octal(pf, (unsigned short)va_arg(pf->args, unsigned int));
+	else if (pf->convmod == 0)
+		print_octal(pf, va_arg(pf->args, unsigned int));
 }

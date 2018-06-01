@@ -6,7 +6,7 @@
 /*   By: tgelu <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/30 21:14:58 by tgelu             #+#    #+#             */
-/*   Updated: 2018/05/31 21:17:45 by tgelu            ###   ########.fr       */
+/*   Updated: 2018/06/01 17:58:33 by tgelu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ static void	print_left_hexa(t_printf *pf, int len, uintmax_t value, char *base)
 		i++;
 	}
 	ft_itoa_base_buff(value, base, pf);
+	i += (pf->identifier == 'p' && value == 0) ? 2 : 0;
 	while (i < pf->width - len)
 	{
 		buffer_add_char(pf, ' ');
@@ -71,6 +72,7 @@ static void	print_right_hexa(t_printf *pf, int len, uintmax_t value, char *base)
 		add_prefix(pf, value);
 	i += (pf->attr & 1 && tmpprec != 0) ? 2 : 0;
 	i += (pf->identifier == 'p' && value == 0) ? 2 : 0;
+	i -= (pf->identifier == 'p' && pf->prec != -1) ? 2 : 0;
 	while (i < pf->width - len && i < pf->width - tmpprec)
 	{
 		buffer_add_char(pf, (pf->attr & 2 && pf->prec == -1) ? '0' : ' ');

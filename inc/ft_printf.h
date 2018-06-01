@@ -6,7 +6,7 @@
 /*   By: tgelu <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/12 15:36:32 by tgelu             #+#    #+#             */
-/*   Updated: 2018/05/30 21:02:55 by tgelu            ###   ########.fr       */
+/*   Updated: 2018/06/01 15:20:48 by tgelu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 # include <stdarg.h>
 # include <unistd.h>
 # include <stdio.h>
+# include <stdlib.h>
+# include <stddef.h>
 # include "../lib/libft.h"
 # define BUFF_SIZE 32
 # define BYTE_TO_BINARY_PATTERN "%c%c%c%c%c%c%c%c"

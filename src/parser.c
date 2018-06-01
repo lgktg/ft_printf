@@ -6,7 +6,7 @@
 /*   By: tgelu <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/13 16:35:26 by tgelu             #+#    #+#             */
-/*   Updated: 2018/05/31 21:12:51 by tgelu            ###   ########.fr       */
+/*   Updated: 2018/06/01 18:46:32 by tgelu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,14 @@ int		is_identifier(char c)
 int		is_attribute(char c)
 {
 	if (c == '#' || c == '0' || c == '-' || c == ' ' || c == '+')
+		return (1);
+	return (0);
+}
+
+int     is_valid_char(char c)
+{
+	if (is_identifier(c) || is_attribute(c) || c == 'h' || c == 'l'
+			|| c == 'j' || c == 'z' || c == '.' || ft_isdigit(c) || c == '*')
 		return (1);
 	return (0);
 }
@@ -95,7 +103,15 @@ void	set_width(t_printf *pf, const char *format, int *i)
 		pf->width = ft_atoi(format + *i);
 	}
 	else if (*(format + *i) == '*')
+	{
 		pf->width = va_arg(pf->args, int);
+		if (pf->width < 0)
+		{
+			pf->attr |= 1 << 2;
+			pf->width *= -1;
+		}
+		(*i)++;
+	}
 	while (ft_isdigit(*(format + *i)))
 		(*i)++;
 	(*i)--;
@@ -103,16 +119,26 @@ void	set_width(t_printf *pf, const char *format, int *i)
 
 void	set_prec(t_printf *pf, const char *format, int *i)
 {
-	if (*(format + *i + 1) != '*')
-		pf->prec = ft_atoi(format + *i + 1);
-	else
+	(*i)++;
+	if (*(format + *i) != '*')
+		pf->prec = ft_atoi(format + *i);
+	else if (*(format + *i) == '*')
+	{
 		pf->prec = va_arg(pf->args, int);
-	while (ft_isdigit(*(format + *i + 1)))
+		if (pf->prec < 0)
+		{
+			pf->attr |= 1 << 2;
+			pf->prec = -1;
+		}
+		(*i)++;
+	}
+	while (ft_isdigit(*(format + *i)))
 		(*i)++;
 }
 
 void	init_pf(t_printf *pf, int *len)
 {
+	pf->identifier = '?';
 	pf->width = 0;
 	pf->prec = -1;
 	pf->attr = 0;
@@ -129,9 +155,11 @@ int		parse_simple_arg(t_printf *pf, const char *format)
 	init_pf(pf, &len);
 	while (format[++i])
 	{
+		if (!is_valid_char(format[i]))
+			return (0);
 		if (is_attribute(format[i]))
 			get_attribute(pf, format);
-		if (!pf->width && ((ft_isdigit(format[i]) && format[i] != '0')
+		if (((ft_isdigit(format[i]) && format[i] != '0')
 					|| (format[i] == '*')) && format[i - 1] != '.')
 			set_width(pf, format, &i);
 		if (format[i] == '.')
@@ -145,7 +173,8 @@ int		parse_simple_arg(t_printf *pf, const char *format)
 		}
 		len++;
 	}
-	process_arg(pf);
+	if (pf->identifier != '?')
+		process_arg(pf);
 	return (len);
 }
 
@@ -162,10 +191,12 @@ int		parse_args(t_printf *pf, const char *format)
 		if (format[i] == '%')
 		{
 			i++;
-			tmp = parse_simple_arg(pf, format + i);
-			while (!is_identifier(format[i]))
+			if (format[i] && is_valid_char(format[i]))
+				tmp = parse_simple_arg(pf, format + i);
+			while (format[i] && is_valid_char(format[i]) && !is_identifier(format[i]))
 				i++;
-			i++;
+			if (format[i] && is_valid_char(format[i]))
+				i++;
 			len += tmp;
 		}
 		else
